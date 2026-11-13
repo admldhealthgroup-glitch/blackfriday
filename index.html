@@ -1,216 +1,289 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Black Friday LD Health International: confira nosso catálogo, consulte preços e monte seu pedido.">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:site_name" content="LD Health International">
-    <meta property="og:title" content="Black Friday | LD Health International">
-    <meta property="og:description" content="Ofertas especiais! Confira nosso catálogo, consulte os preços e monte seu pedido.">
-    <meta property="og:url" content="https://admldhealthgroup-glitch.github.io/blackfriday/">
-    <meta property="og:image" content="https://admldhealthgroup-glitch.github.io/blackfriday/blackfriday-whatsapp.png">
-    <meta property="og:image:width" content="1672">
-    <meta property="og:image:height" content="941">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Black Friday | LD Health International">
-    <meta name="twitter:description" content="Ofertas especiais! Confira nosso catálogo e monte seu pedido.">
-    <meta name="twitter:image" content="https://admldhealthgroup-glitch.github.io/blackfriday/blackfriday-whatsapp.png">
-    <meta name="theme-color" content="#ffffff">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Black Friday LD Health International: confira nosso catálogo, consulte preços e monte seu pedido."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="LD Health International" />
+    <meta
+      property="og:title"
+      content="Black Friday | LD Health International"
+    />
+    <meta
+      property="og:description"
+      content="Ofertas especiais! Confira nosso catálogo, consulte os preços e monte seu pedido."
+    />
+    <meta
+      property="og:url"
+      content="https://admldhealthgroup-glitch.github.io/blackfriday/"
+    />
+    <meta
+      property="og:image"
+      content="https://admldhealthgroup-glitch.github.io/blackfriday/blackfriday-whatsapp.png"
+    />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="941" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Black Friday | LD Health International"
+    />
+    <meta
+      name="twitter:description"
+      content="Ofertas especiais! Confira nosso catálogo e monte seu pedido."
+    />
+    <meta
+      name="twitter:image"
+      content="https://admldhealthgroup-glitch.github.io/blackfriday/blackfriday-whatsapp.png"
+    />
+    <meta name="theme-color" content="#ffffff" />
 
     <title>Tabela de Preços | LD Health International</title>
 
-    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="styles.css?v=5" />
 
     <!-- Biblioteca para leitura de arquivos Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- ABERTURA BLACK FRIDAY: APENAS LED -->
     <section id="intro" class="intro" aria-label="Abertura Black Friday">
-        <div class="bf-stage bf-stage-led" aria-hidden="true">
-            <div class="bf-neon-frame">
-                <div class="bf-neon-title"><span>BLACK</span><span>FRIDAY</span></div>
-            </div>
+      <div class="bf-stage bf-stage-led" aria-hidden="true">
+        <div class="bf-neon-frame">
+          <div class="bf-neon-title"><span>BLACK</span><span>FRIDAY</span></div>
         </div>
-        <button id="skip-intro" class="bf-skip" type="button" aria-label="Pular abertura">Pular abertura</button>
+      </div>
+      <button
+        id="skip-intro"
+        class="bf-skip"
+        type="button"
+        aria-label="Pular abertura"
+      >
+        Pular abertura
+      </button>
     </section>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main id="main-content" class="main-content">
+      <header class="page-header">
+        <img
+          class="logo_page-header"
+          src="logo_LD.png"
+          alt="LD Health International"
+        />
+        <h1>Catálogo de Produtos</h1>
+        <p>Selecione seus produtos e envie seu pedido pelo WhatsApp.</p>
+      </header>
 
-        <header class="page-header">
-<img
-                class="logo_page-header"
-                src="logo_LD.png"
-                alt="LD Health International"
+      <!-- STATUS DA PLANILHA -->
+      <div
+        id="data-status"
+        class="data-status"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></div>
+
+      <!-- TELA DE CATEGORIAS -->
+      <section id="categories-view" class="view active">
+        <!-- PESQUISA DE PRODUTOS -->
+        <div class="product-search-container">
+          <label for="product-search" class="product-search-label">
+            ENCONTRE SEU PRODUTO
+          </label>
+
+          <div class="product-search-box">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+
+            <input
+              type="search"
+              id="product-search"
+              class="product-search-input"
+              placeholder="Digite o nome do produto..."
+              autocomplete="off"
+              aria-label="Pesquisar produtos"
+            />
+
+            <button
+              id="clear-search-button"
+              class="clear-search-button"
+              type="button"
+              aria-label="Limpar pesquisa"
+              hidden
             >
-            <h1>Catálogo de Produtos</h1><p>Selecione seus produtos e envie seu pedido pelo WhatsApp.</p>
-        </header>
+              ×
+            </button>
+          </div>
 
-        <!-- STATUS DA PLANILHA -->
+          <p class="product-search-hint">
+            Pesquise produtos em todas as categorias.
+          </p>
+        </div>
+
+        <!-- RESULTADOS DA PESQUISA -->
         <div
-            id="data-status"
-            class="data-status"
-            role="status"
-            aria-live="polite"
-            hidden
+          id="search-results"
+          class="search-results"
+          aria-live="polite"
+          hidden
         ></div>
 
-        <!-- TELA DE CATEGORIAS -->
-        <section id="categories-view" class="view active">
+        <!-- CATEGORIAS -->
+        <div class="categories-grid">
+          <button class="category-card" data-category="toxinas" type="button">
+            <span class="category-name">TOXINAS BOTULÍNICAS</span>
+          </button>
 
-            <!-- PESQUISA DE PRODUTOS -->
-            <div class="product-search-container">
+          <button
+            class="category-card"
+            data-category="preenchedores"
+            type="button"
+          >
+            <span class="category-name">PREENCHEDORES</span>
+          </button>
 
-                <label for="product-search" class="product-search-label">
-                    ENCONTRE SEU PRODUTO
-                </label>
+          <button
+            class="category-card"
+            data-category="bioestimuladores"
+            type="button"
+          >
+            <span class="category-name">BIOESTIMULADORES</span>
+          </button>
 
-                <div class="product-search-box">
+          <button class="category-card" data-category="fios" type="button">
+            <span class="category-name">FIOS DE PDO</span>
+          </button>
 
-                    <span class="search-icon" aria-hidden="true">⌕</span>
+          <button
+            class="category-card"
+            data-category="microcanulas"
+            type="button"
+          >
+            <span class="category-name">MICROCÂNULAS</span>
+          </button>
 
-                    <input
-                        type="search"
-                        id="product-search"
-                        class="product-search-input"
-                        placeholder="Digite o nome do produto..."
-                        autocomplete="off"
-                        aria-label="Pesquisar produtos"
-                    >
+          <button class="category-card" data-category="solucoes" type="button">
+            <span class="category-name"
+              >SOLUÇÕES E MEDICAMENTOS AUXILIARES</span
+            >
+          </button>
 
-                    <button
-                        id="clear-search-button"
-                        class="clear-search-button"
-                        type="button"
-                        aria-label="Limpar pesquisa"
-                        hidden
-                    >
-                        ×
-                    </button>
+          <button class="category-card" data-category="dermapen" type="button">
+            <span class="category-name">DERMAPEN E CARTUCHOS</span>
+          </button>
 
-                </div>
+          <button class="category-card" data-category="skincare" type="button">
+            <span class="category-name">SKINCARE E BOOSTERS</span>
+          </button>
 
-                <p class="product-search-hint">
-                    Pesquise produtos em todas as categorias.
-                </p>
+          <button class="category-card" data-category="insumos" type="button">
+            <span class="category-name">INSUMOS</span>
+          </button>
+        </div>
+      </section>
 
-            </div>
+      <!-- TELA DE PRODUTOS -->
+      <section id="products-view" class="view" hidden>
+        <button id="back-button" class="back-button" type="button">
+          Voltar
+        </button>
 
-            <!-- RESULTADOS DA PESQUISA -->
-            <div
-                id="search-results"
-                class="search-results"
-                aria-live="polite"
-                hidden
-            ></div>
+        <div class="products-header">
+          <span class="eyebrow">CATEGORIA SELECIONADA</span>
+          <h2 id="category-title"></h2>
+        </div>
 
-            <!-- CATEGORIAS -->
-            <div class="categories-grid">
+        <div class="products-table-container">
+          <table class="products-table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Preço normal</th>
+                <th>Quantidade / Selecionar</th>
+              </tr>
+            </thead>
 
-                <button class="category-card" data-category="toxinas" type="button">
-                    <span class="category-name">TOXINAS BOTULÍNICAS</span>
-                </button>
+            <tbody id="products-list"></tbody>
+          </table>
 
-                <button class="category-card" data-category="preenchedores" type="button">
-                    <span class="category-name">PREENCHEDORES</span>
-                </button>
+          <div id="empty-message" class="empty-message" hidden>
+            <span>◇</span>
+            <p>Nenhum produto cadastrado nesta categoria.</p>
+          </div>
+        </div>
+      </section>
 
-                <button class="category-card" data-category="bioestimuladores" type="button">
-                    <span class="category-name">BIOESTIMULADORES</span>
-                </button>
+      <!-- CARRINHO DE INTERESSE -->
+      <section
+        id="cart-section"
+        class="cart-section"
+        aria-labelledby="cart-title"
+      >
+        <div class="cart-heading">
+          <div><h2 id="cart-title">Produtos selecionados</h2></div>
+        </div>
+        <p id="cart-empty">
+          Nenhum produto selecionado. Escolha os itens nas categorias acima.
+        </p>
+        <div id="cart-items"></div>
+        <div class="cart-summary" id="cart-summary" hidden>
+          <span>Total estimado</span><strong id="cart-total">R$ 0,00</strong>
+        </div>
+        <label class="cart-label" for="customer-name">Seu nome</label>
+        <input
+          id="customer-name"
+          class="cart-input"
+          placeholder="Informe seu nome"
+          minlength="8"
+          maxlength="100"
+          required
+        />
+        <button
+          id="send-whatsapp"
+          class="whatsapp-button"
+          type="button"
+          disabled
+        >
+          <svg
+            aria-hidden="true"
+            width="21"
+            height="21"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.5 0 .14 5.35.13 11.93c0 2.1.55 4.15 1.6 5.96L0 24l6.27-1.64a11.9 11.9 0 0 0 5.8 1.48h.01c6.58 0 11.94-5.35 11.94-11.93a11.85 11.85 0 0 0-3.5-8.43ZM12.08 21.8a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.73.98.99-3.64-.23-.37a9.85 9.85 0 0 1-1.51-5.25c0-5.44 4.43-9.87 9.88-9.87a9.8 9.8 0 0 1 6.98 2.9 9.8 9.8 0 0 1 2.88 6.98c0 5.44-4.43 9.86-9.87 9.86Zm5.42-7.39c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.23-.65.08-.3-.15-1.26-.46-2.4-1.48-.89-.8-1.49-1.78-1.66-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.08-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.09 4.48.71.3 1.27.48 1.7.61.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35Z"
+            /></svg
+          ><span>Enviar Pedido</span>
+        </button>
 
-                <button class="category-card" data-category="fios" type="button">
-                    <span class="category-name">FIOS DE PDO</span>
-                </button>
+        <button
+          type="button"
+          id="clear-cart"
+          class="clear-cart-button"
+          disabled
+        >
+          Limpar carrinho
+        </button>
+        <p class="cart-disclaimer">
+          Pedido sujeito à confirmação de preços e disponibilidade pelo
+          WhatsApp.
+        </p>
+      </section>
 
-                <button class="category-card" data-category="microcanulas" type="button">
-                    <span class="category-name">MICROCÂNULAS</span>
-                </button>
-
-                <button class="category-card" data-category="solucoes" type="button">
-                    <span class="category-name">SOLUÇÕES E MEDICAMENTOS AUXILIARES</span>
-                </button>
-
-                <button class="category-card" data-category="dermapen" type="button">
-                    <span class="category-name">DERMAPEN E CARTUCHOS</span>
-                </button>
-
-                <button class="category-card" data-category="skincare" type="button">
-                    <span class="category-name">SKINCARE E BOOSTERS</span>
-                </button>
-
-                <button class="category-card" data-category="insumos" type="button">
-                    <span class="category-name">INSUMOS</span>
-                </button>
-
-            </div>
-        </section>
-
-        <!-- TELA DE PRODUTOS -->
-        <section id="products-view" class="view" hidden>
-
-            <button id="back-button" class="back-button" type="button">
-                Voltar
-            </button>
-
-            <div class="products-header">
-                <span class="eyebrow">CATEGORIA SELECIONADA</span>
-                <h2 id="category-title"></h2>
-            </div>
-
-            <div class="products-table-container">
-
-                <table class="products-table">
-
-                    <thead>
-                        <tr>
-                            <th>Produto</th>
-                            <th>Preço normal</th>
-                            <th>Quantidade / Selecionar</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="products-list"></tbody>
-
-                </table>
-
-                <div id="empty-message" class="empty-message" hidden>
-                    <span>◇</span>
-                    <p>Nenhum produto cadastrado nesta categoria.</p>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- CARRINHO DE INTERESSE -->
-        <section id="cart-section" class="cart-section" aria-labelledby="cart-title">
-            <div class="cart-heading"><div><h2 id="cart-title">Produtos selecionados</h2></div></div>
-            <p id="cart-empty">Nenhum produto selecionado. Escolha os itens nas categorias acima.</p>
-            <div id="cart-items"></div>
-            <div class="cart-summary" id="cart-summary" hidden><span>Total estimado</span><strong id="cart-total">R$ 0,00</strong></div>
-            <label class="cart-label" for="customer-name">Seu nome</label>
-            <input id="customer-name" class="cart-input" placeholder="Informe seu nome" minlength="8" maxlength="100" required>
-            <button id="send-whatsapp" class="whatsapp-button" type="button" disabled><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.5 0 .14 5.35.13 11.93c0 2.1.55 4.15 1.6 5.96L0 24l6.27-1.64a11.9 11.9 0 0 0 5.8 1.48h.01c6.58 0 11.94-5.35 11.94-11.93a11.85 11.85 0 0 0-3.5-8.43ZM12.08 21.8a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.73.98.99-3.64-.23-.37a9.85 9.85 0 0 1-1.51-5.25c0-5.44 4.43-9.87 9.88-9.87a9.8 9.8 0 0 1 6.98 2.9 9.8 9.8 0 0 1 2.88 6.98c0 5.44-4.43 9.86-9.87 9.86Zm5.42-7.39c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.23-.65.08-.3-.15-1.26-.46-2.4-1.48-.89-.8-1.49-1.78-1.66-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.08-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.09 4.48.71.3 1.27.48 1.7.61.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35Z"/></svg><span>Enviar Pedido</span></button>
-            <p class="cart-disclaimer">Pedido sujeito à confirmação de preços e disponibilidade pelo WhatsApp.</p>
-        </section>
-
-
-        <!-- RODAPÉ -->
-        <footer class="footer">
-            <span>LD Health International</span>
-        </footer>
-
+      <!-- RODAPÉ -->
+      <footer class="footer">
+        <span>LD Health International</span>
+      </footer>
     </main>
 
     <!-- INICIALIZAÇÃO DOS SCRIPTS -->
     <script src="script.js?v=5"></script>
-
-</body>
+  </body>
 </html>

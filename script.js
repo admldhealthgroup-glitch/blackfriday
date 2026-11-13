@@ -1,4 +1,3 @@
-
 "use strict";
 
 // LD HEALTH INTERNATIONAL
@@ -267,17 +266,30 @@ function atualizarQuantidades() {
     .forEach((el) => el.atualizar?.());
 }
 
+
 function renderizarCarrinho() {
   const area = $("cart-items");
   if (!area) return;
+
   area.replaceChildren();
 
-  const total = carrinho.reduce((s, x) => s + x.preco * x.quantidade, 0);
+  const total = carrinho.reduce(
+    (s, x) => s + x.preco * x.quantidade,
+    0
+  );
 
   $("cart-empty").hidden = carrinho.length > 0;
   $("cart-summary").hidden = carrinho.length === 0;
   $("cart-total").textContent = moeda(total);
+
+  // Botão Enviar Pedido
   $("send-whatsapp").disabled = carrinho.length === 0;
+
+  // Botão Limpar Carrinho
+  const botaoLimpar = $("clear-cart");
+  if (botaoLimpar) {
+    botaoLimpar.disabled = carrinho.length === 0;
+  }
 
   carrinho.forEach((item) => {
     const linha = document.createElement("div");
@@ -302,6 +314,7 @@ function renderizarCarrinho() {
     area.append(linha);
   });
 }
+
 
 // CATEGORIAS
 
@@ -585,6 +598,21 @@ function limparPedido() {
   console.info("Pedido finalizado. Carrinho limpo.");
 }
 
+function limparPedido() {
+  carrinho = [];
+
+  localStorage.removeItem(CHAVE_CARRINHO);
+
+  renderizarCarrinho();
+  atualizarQuantidades();
+
+  const campoNome = document.getElementById("customer-name");
+
+  if (campoNome) {
+    campoNome.value = "";
+    campoNome.setCustomValidity("");
+  }
+}
 
 async function enviarPedido() {
   if (!carrinho.length) return;
@@ -602,7 +630,8 @@ async function enviarPedido() {
   campo.setCustomValidity("");
 
   const total = carrinho.reduce(
-    (s, item) => s + item.preco * item.quantidade, 0
+    (s, item) => s + item.preco * item.quantidade,
+    0,
   );
 
   const linhas = [
@@ -614,24 +643,22 @@ async function enviarPedido() {
     "*PRODUTOS*",
     ...carrinho.flatMap((item) => [
       "• " + nomeBonito(item.descricao),
-      "  " + item.quantidade + " x " + moeda(item.preco) +
-        " = " + moeda(item.quantidade * item.preco),
-      ""
+      "  " + item.quantidade + " x " + moeda(item.preco),
+      "",
     ]),
     "*TOTAL: " + moeda(total) + "*",
     "",
-    "Valores e disponibilidade sujeitos à confirmação."
+    "Valores e disponibilidade sujeitos à confirmação.",
   ];
 
   const numero = "5512988214515";
   const mensagem = encodeURIComponent(linhas.join("\n"));
 
-  window.location.href =
-    "https://wa.me/" + numero + "?text=" + mensagem;
+  window.location.href = "https://wa.me/" + numero + "?text=" + mensagem;
 }
 
-
 // INICIALIZAÇÃO
+
 
 document.addEventListener("DOMContentLoaded", () => {
   recuperarCarrinho();
@@ -655,10 +682,29 @@ document.addEventListener("DOMContentLoaded", () => {
     e.target.setCustomValidity("");
   });
 
+  // Botão Enviar Pedido pelo WhatsApp
   $("send-whatsapp").addEventListener("click", enviarPedido);
+
+  // Botão Limpar Carrinho
+  const botaoLimpar = $("clear-cart");
+
+  if (botaoLimpar) {
+    botaoLimpar.addEventListener("click", () => {
+      if (!carrinho.length) return;
+
+      const confirmar = window.confirm(
+        "Deseja remover todos os produtos do carrinho?"
+      );
+
+      if (confirmar) {
+        limparPedido();
+      }
+    });
+  }
 
   carregarExcel();
 });
+
 
 // Abertura promocional: LED -> etiqueta -> catálogo.
 window.addEventListener("load", () => {
@@ -672,12 +718,16 @@ window.addEventListener("load", () => {
     concluida = true;
     intro.classList.add("hidden");
     main.classList.add("visible");
-    window.setTimeout(() => { intro.hidden = true; }, 750);
+    window.setTimeout(() => {
+      intro.hidden = true;
+    }, 750);
   };
 
   $("skip-intro")?.addEventListener("click", finalizar);
 
-  const reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduzMovimento = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   if (reduzMovimento) {
     finalizar();
     return;
