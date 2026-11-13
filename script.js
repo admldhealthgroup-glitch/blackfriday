@@ -585,6 +585,7 @@ function limparPedido() {
   console.info("Pedido finalizado. Carrinho limpo.");
 }
 
+
 async function enviarPedido() {
   if (!carrinho.length) return;
 
@@ -600,58 +601,35 @@ async function enviarPedido() {
 
   campo.setCustomValidity("");
 
-  const botao = $("send-whatsapp");
-  botao.disabled = true;
+  const total = carrinho.reduce(
+    (s, item) => s + item.preco * item.quantidade, 0
+  );
 
-  try {
-    const arquivo = await gerarNotinha(nome);
+  const linhas = [
+    "*PEDIDO LD HEALTH INTERNATIONAL*",
+    "",
+    "*Cliente:* " + nome,
+    "*Data:* " + new Date().toLocaleDateString("pt-BR"),
+    "",
+    "*PRODUTOS*",
+    ...carrinho.flatMap((item) => [
+      "• " + nomeBonito(item.descricao),
+      "  " + item.quantidade + " x " + moeda(item.preco) +
+        " = " + moeda(item.quantidade * item.preco),
+      ""
+    ]),
+    "*TOTAL: " + moeda(total) + "*",
+    "",
+    "Valores e disponibilidade sujeitos à confirmação."
+  ];
 
-    if (navigator.share && navigator.canShare?.({ files: [arquivo] })) {
-      try {
-        await navigator.share({
-          files: [arquivo],
-        });
+  const numero = "5512988214515";
+  const mensagem = encodeURIComponent(linhas.join("\n"));
 
-        // Limpa o pedido após o compartilhamento ser concluído.
-        limparPedido();
-        return;
-      } catch (erro) {
-        if (erro.name === "AbortError") return;
-        console.warn(erro);
-      }
-    }
-
-    // Alternativa para navegadores sem compartilhamento.
-    const url = URL.createObjectURL(arquivo);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = arquivo.name;
-    document.body.append(link);
-    link.click();
-    link.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 60000);
-
-    const numero = WHATSAPP_LOJA.replace(/\D/g, "");
-    if (/^\d{12,15}$/.test(numero)) {
-      const mensagem = encodeURIComponent(
-        "Olá! Segue meu pedido LD Health. Vou anexar a imagem.",
-      );
-      window.open(
-        "https://wa.me/" + numero + "?text=" + mensagem,
-        "_blank",
-        "noopener,noreferrer",
-      );
-    }
-
-    alert("A imagem do pedido foi salva. Anexe-a à conversa no WhatsApp.");
-  } catch (erro) {
-    console.error(erro);
-    alert("Erro ao preparar pedido: " + erro.message);
-  } finally {
-    botao.disabled = carrinho.length === 0;
-  }
+  window.location.href =
+    "https://wa.me/" + numero + "?text=" + mensagem;
 }
+
 
 // INICIALIZAÇÃO
 
